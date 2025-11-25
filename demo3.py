@@ -1,0 +1,37 @@
+from mylibral import *
+layout=[
+[sgg.Text(text="この中で一番好きな色を一つ選ぶ")],
+[
+sgg.Radio(text="赤色",group="color_name"),
+sgg.Radio(text="黄色",group="color_name"),
+sgg.Radio(text="緑色",group="color_name"),
+sgg.Radio(text="黒色",group="color_name"),
+sgg.Radio(text="その他",group="color_name")
+],
+[sgg.Text(text="この中で一番好きな色を複数選ぶ")],
+[
+sgg.Checkbox(text="赤色",group="color_name"),
+sgg.Checkbox(text="黄色",group="color_name"),
+sgg.Checkbox(text="緑色",group="color_name"),
+sgg.Checkbox(text="黒色",group="color_name"),
+sgg.Checkbox(text="その他",group="color_name")
+],
+[sgg.Text(text="この中で一番好きな食べ物を一つ選ぶ")],
+[
+sgg.Radio(text="からあげ",group="food_name"),
+sgg.Radio(text="蕎麦",default=True,group="food_name"),
+sgg.Radio(text="おすし",group="food_name"),
+sgg.Radio(text="おにぎり",group="food_name"),
+sgg.Radio(text="その他",group="food_name")
+],
+[sgg.Text(text="この中で一番好きな食べ物を複数選ぶ")],
+[
+sgg.Checkbox(text="からあげ",group="food_name"),
+sgg.Checkbox(text="蕎麦",default=True,group="food_name"),
+sgg.Checkbox(text="おすし",group="food_name"),
+sgg.Checkbox(text="おにぎり",group="food_name"),
+sgg.Checkbox(text="その他",group="food_name")
+]
+]
+win=sgg.window(title="mylibral ウィジェット デモ",layout=layout,scroll_x=True,scroll_y=True,maxmine=True)
+win.run()
