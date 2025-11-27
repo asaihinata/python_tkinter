@@ -10,7 +10,7 @@ layout=[
 [sgg.Text(text="表(縦見出しなし)")],
 [sgg.Table(header=["列A","列B"],values=[["r1c1","r1c2"],["r2c1","r2c2"]],key="table2")],
 [sgg.Text(text="ツリー")],
-[sgg.Tree(values=tree_values,header=["あ","い","う","え","お"],key="tree1")]
+[sgg.Tree(values=tree_values,side_header="行",header=["あ","い","う","え","お"],key="tree1")]
 ]
 win=sgg.window(title="mylibral ウィジェット デモ",layout=layout,scroll_x=True,scroll_y=True,maxmine=True)
 win.run()

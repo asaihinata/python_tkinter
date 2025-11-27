@@ -14,9 +14,9 @@ layout=[
 [sgg.InputNumber(key="number")],
 [sgg.Text(text="スクロールを追加する")],
 [
-sgg.Input(text="こんにちは。初めまして。",width=10,scroll_x=True)
-,sgg.Multiline(text=[1,2,3,4,5,6,7,8,9,10],size=(10,5),scroll_x=True,scroll_y=True,key="multiline1")
-,sgg.Listbox(values=list_val2,select=0,scroll_y=True)
+sgg.Input(text="こんにちは。初めまして。",width=10,scroll_x=True),
+sgg.Multiline(text=[1,2,3,4,5,6,7,8,9,10],size=(10,5),scroll_x=True,scroll_y=True,key="multiline1"),
+sgg.Listbox(values=list_val2,select=0,scroll_y=True)
 ],
 ]
 win=sgg.window(title="mylibral ウィジェット デモ",layout=layout,scroll_x=True,scroll_y=True,maxmine=True)

@@ -1,4 +1,5 @@
 from manyfunction import *
+from pathlib import Path
 import tkinter as tk,os,tkcalendar as tkc,tkinter.font as tkFont,webbrowser,pyautogui as p
 from tkinter import ttk,colorchooser,filedialog
 from PIL import Image,ImageTk
@@ -119,7 +120,8 @@ class WindowController:
    row_frame.pack(fill="x",padx=5,pady=5)
    for kwargs in row:self._create_element(kwargs,row_frame,bg)
  def _create_element(self,kwargs,parent,bgs=None):# widget作成
-  t,widget,kwargs["back_bg"]=kwargs.get("type"),None,bgs
+  t,widget=kwargs.get("type"),None
+  kwargs["back_bg"]=bgs
   self.count+=1
   if t=="Menu":widget=Menu(parent,kwargs)
   elif t=="Menubutton":widget=Menubutton(parent,kwargs)
@@ -144,7 +146,7 @@ class WindowController:
     if not isinstance(tab,(list,tuple)) or len(tab)==0:continue
     frame=tk.Frame(widget.nb,bg=widget.bg)
     widget.add_tab(tab[0],frame)
-    if len(tab)>1 and isinstance(tab[1],list):
+    if 1<len(tab) and isinstance(tab[1],list):
      try:self._build_layout(tab[1],frame,kwargs.get("bg"))
      except Exception as e:print("Tabレイアウト構築エラー:",e)
   elif t=="Frames":# Frame
@@ -255,7 +257,7 @@ class SubWindowController:
    row_frame.pack(fill="x",padx=5,pady=5)
    for kwargs in row:self._create_element(kwargs,row_frame,bg)
  def _create_element(self,kwargs,parent,bgs=None):# widget作成
-  t,widget=kwargs.get("type"),None
+  t,widget=kwargs["type"],None
   kwargs["back_bg"]=bgs
   self.count+=1
   if t=="Menu":widget=Menu(parent,kwargs)
@@ -292,7 +294,7 @@ class SubWindowController:
     if not isinstance(tab,(list,tuple)) or len(tab)==0:continue
     frame=tk.Frame(widget.nb,bg=widget.bg)
     widget.add_tab(tab[0],frame)
-    if len(tab)>1 and isinstance(tab[1],list):
+    if 1<len(tab) and isinstance(tab[1],list):
      try:self._build_layout(tab[1],frame,kwargs.get("bg"))
      except Exception as e:print("Tabレイアウト構築エラー:",e)
   else:widget=tk.Label(parent,text=f"Unknown element:{t}")# 該当なし
@@ -1041,22 +1043,20 @@ class Tree(tk.Frame):
   L=len(vals)
   while i<L:
    v=vals[i]
-   if isinstance(v,str):
-    if i+1<L and isinstance(vals[i+1],list):
+   if isinstance(v,str) and i+1<L and isinstance(vals[i+1],list):
      c=self._maxlen_in_list(vals[i+1])
-     if c>maxc:maxc=c
+     if maxc<c:maxc=c
      i+=2
-    else:i+=1
    else:i+=1
   return maxc
  def _maxlen_in_list(self,lst):
   maxc=0
   strings=[x for x in lst if not isinstance(x,list)]
-  if len(strings)>maxc:maxc=len(strings)
+  if maxc<len(strings):maxc=len(strings)
   for x in lst:
    if isinstance(x,list):
     c=self._maxlen_in_list(x)
-    if c>maxc:maxc=c
+    if maxc<c:maxc=c
   return maxc
  def _flatten_strings(self,lst):
   out=[]
@@ -1068,32 +1068,25 @@ class Tree(tk.Frame):
   i,L=0,len(vals)
   while i<L:
    item=vals[i]
-   if isinstance(item,str):
-    parent_id=self.tree.insert("","end",text=item,values=("")*self.maxcols)
-    if i+1<L and isinstance(vals[i+1],list):
-     self._process_data_list(parent_id,item,vals[i+1])
+   if isinstance(item,str) and i+1<L and isinstance(vals[i+1],list):
+     self._process_data_list(self.tree.insert("","end",text=item,values=("")*self.maxcols),item,vals[i+1])
      self.sums+=2
      i+=2
-    else:
-     self.sums+=1
-     i+=1
    else:
-    i+=1
     self.sums+=1
+    i+=1
  def _process_data_list(self,parent_id,parent_text,data_list):
   summary_values=[x for x in data_list if not isinstance(x,list)]
   summary_id=self.tree.insert(parent_id,tk.END,text=parent_text,values=(tuple((str(x) for x in summary_values[:self.maxcols]))+tuple("" for _ in range(max(0,self.maxcols-len(summary_values))))))
   for idx,x in enumerate(data_list):
    if isinstance(x,list):
     k=idx-1
-    while k>=0 and isinstance(data_list[k],list):k-=1
-    label=data_list[k] if k>=0 and isinstance(data_list[k],str) else ""
+    while k<=0 and isinstance(data_list[k],list):k-=1
+    label=data_list[k] if 0<=k and isinstance(data_list[k],str) else ""
     if any(isinstance(s,list) for s in x):
      nested_summary_values=[s for s in x if not isinstance(s,list)]
-     nvals=tuple((str(s) for s in nested_summary_values[:self.maxcols]))+tuple("" for _ in range(max(0,self.maxcols-len(nested_summary_values))))
-     nested_parent_id=self.tree.insert(summary_id,tk.END,text=label,values=nvals)
      for y in x:
-      if isinstance(y,list):self._process_data_list(nested_parent_id,label,y)
+      if isinstance(y,list):self._process_data_list(self.tree.insert(summary_id,tk.END,text=label,values=tuple((str(s) for s in nested_summary_values[:self.maxcols]))+tuple("" for _ in range(max(0,self.maxcols-len(nested_summary_values))))),label,y)
     else:self.tree.insert(summary_id,tk.END,text=label,values=tuple((str(s) for s in x[:self.maxcols]))+tuple("" for _ in range(max(0,self.maxcols-len(x)))))
  def _on_select(self,event):
   if not self.onclick:return
@@ -1120,9 +1113,8 @@ class Tree(tk.Frame):
  def clear_width(self):
   columns=self.tree["columns"]
   self.update_idletasks()
-  total_width=self.tree.winfo_width()
-  if len(columns)>0:
-   for col in columns:self.tree.column(col,width=int(total_width/len(columns)))
+  if 0<len(columns):
+   for col in columns:self.tree.column(col,width=int(self.tree.winfo_width()/len(columns)))
 class Table(tk.Frame):
  def __init__(self,master,kwargs):
   super().__init__(master)
@@ -1166,7 +1158,7 @@ class Table(tk.Frame):
   if self.rowheader:columns.append("rowheader")
   if self.header:columns+=self.header
   else:
-   if len(self.values)>0:columns+=["col_"+str(i) for i in range(len(self.values[0]))]
+   if 0<len(self.values):columns+=["col_"+str(i) for i in range(len(self.values[0]))]
   self.tree["columns"]=columns
   for col in columns:
    self.tree.heading(col,text=(" " if self.rowheader else "行")if col=="rowheader" else col if self.header else "")
@@ -1192,7 +1184,7 @@ class Table(tk.Frame):
   if total_width==None:
    self.update_idletasks()
    total_width=self.tree.winfo_width()
-  if len(columns)>0:
+  if 0<len(columns):
    for col in columns:self.tree.column(col,width=int(total_width/len(columns)))
  def _delta(self):self.tree.destroy()
 class Slidebar(tk.Scale):
@@ -1259,7 +1251,7 @@ class Menu(tk.Menu):
   for menus in self.menu_lists:
    if not isinstance(menus,list):continue
    for i in range(0,len(menus),2):
-    if i+1>=len(menus):break
+    if len(menus)<=i+1:break
     submenu=tk.Menu(self,tearoff=self.tearoff,bg=self.bg,fg=self.fg,font=self.font)
     self._add_items_recursive(submenu,menus[i+1])
     self.add_cascade(label=menus[i],menu=submenu)
@@ -1336,7 +1328,7 @@ class Menubutton(tk.Menubutton):
   for menus in self.menu_lists:
    if not isinstance(menus,list):continue
    for i in range(0,len(menus),2):
-    if i+1>=len(menus):break
+    if len(menus)<=i+1:break
     submenu=tk.Menu(self.menu,tearoff=self.tearoff,bg=self.bg,fg=self.fg,font=self.font)
     for item in menus[i+1]:
      if isinstance(item,dict):submenu.add_command(label=item.get("label",""),command=lambda f=item.get("function",None):__Widget__._exec_funcs(f))
@@ -1644,7 +1636,7 @@ class Link(tk.Label):
 class Images(tk.Label):
  def __init__(self,master,kwargs):
   self.master=master
-  self.path=kwargs.get("path")
+  self.path=Path(kwargs.get("path"))
   self.size=self._img_size(kwargs,self.path)
   self.takefocus=bols(kwargs.get("takefocus"))
   self.width=self.size[0]

@@ -30,3 +30,7 @@ Progressbar
 demo6
 Table
 Tree
+-------------------------------------------------------
+demo7
+Menu
+Menubutton

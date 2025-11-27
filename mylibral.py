@@ -11,19 +11,12 @@ win=sgg.window(title="demo code",layout=layout,scroll_y=True,maxmine=True)
 win.run()
 """
 from new_element import *
+from popup import *
 def counts():
  sgg.count+=1
  return sgg.count
 class sgg:
  count=0
- def Popup(**kwargs):return Popupi.p(kwargs)
- def Popupwarning(**kwargs):return Popupw.p(kwargs)
- def Popuperror(**kwargs):return Popupe.p(kwargs)
- def Popupyesno(**kwargs):return Popupq.p(kwargs)
- def Popupokcancel(**kwargs):return Popupoc.p(kwargs)
- def Popuyesno(**kwargs):return Popupyn.p(kwargs)
- def Popupyesnocancel(**kwargs):return Popupync.p(kwargs)
- def Popuptrycancel(**kwargs):return Popuptry.p(kwargs)
  @staticmethod
  def Menu(**kwargs):return{"count":counts(),"type":"Menu",**kwargs}
  @staticmethod
@@ -74,6 +67,22 @@ class sgg:
  def Tab(**kwargs):return{"count":counts(),"type":"Tab",**kwargs}
  @staticmethod
  def Progressbar(**kwargs):return{"count":counts(),"type":"Progressbar",**kwargs}
+ @classmethod
+ def Popup(**kwargs):return popups(**kwargs)
+ @classmethod
+ def Popupwarning(cls,**kwargs):return popupw(**kwargs)
+ @classmethod
+ def Popuperror(cls,**kwargs):return popupe(**kwargs)
+ @classmethod
+ def Popupyesno(cls,**kwargs):return popupq(**kwargs)
+ @classmethod
+ def Popupokcancel(cls,**kwargs):return popupoc(**kwargs)
+ @classmethod
+ def Popupyesno(cls,**kwargs):return popupyn(**kwargs)
+ @classmethod
+ def Popupyesnocancel(cls,**kwargs):return popupync(**kwargs)
+ @classmethod
+ def Popuptrycancel(cls,**kwargs):return popuptry(**kwargs)
  @classmethod
  def window(cls,**kwargs):return SubWindowController(kwargs) if kwargs.get("type")=="toplevel" else WindowController(kwargs)
  def formatlist():
