@@ -10,7 +10,7 @@ layout=[
 win=sgg.window(title="demo code",layout=layout,scroll_y=True,maxmine=True)
 win.run()
 """
-from new_element import *
+from Window import *
 def counts():
  sgg.count+=1
  return sgg.count
