@@ -1,6 +1,5 @@
 from mylibral import *
-def progress_start():
- win.get("prigress")._start()
+def progress_start():win.get("prigress")._start()
 layout=[
 [sgg.Text(text="カレンダー")],
 [sgg.Calendars(key="cal")],

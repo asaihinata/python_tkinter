@@ -11,7 +11,6 @@ win=sgg.window(title="demo code",layout=layout,scroll_y=True,maxmine=True)
 win.run()
 """
 from new_element import *
-from popup import *
 def counts():
  sgg.count+=1
  return sgg.count
@@ -68,21 +67,23 @@ class sgg:
  @staticmethod
  def Progressbar(**kwargs):return{"count":counts(),"type":"Progressbar",**kwargs}
  @classmethod
- def Popup(**kwargs):return popups(**kwargs)
+ def Popup(cls,**kwargs):return popups(**kwargs).retul
  @classmethod
- def Popupwarning(cls,**kwargs):return popupw(**kwargs)
+ def Popupwarning(cls,**kwargs):return popupw(**kwargs).retul
  @classmethod
- def Popuperror(cls,**kwargs):return popupe(**kwargs)
+ def Popupwarningyesno(cls,**kwargs):return popupwyn(**kwargs).retul
  @classmethod
- def Popupyesno(cls,**kwargs):return popupq(**kwargs)
+ def Popuperror(cls,**kwargs):return popupe(**kwargs).retul
  @classmethod
- def Popupokcancel(cls,**kwargs):return popupoc(**kwargs)
+ def Popupquestion(cls,**kwargs):return popupq(**kwargs).retul
  @classmethod
- def Popupyesno(cls,**kwargs):return popupyn(**kwargs)
+ def Popupokcancel(cls,**kwargs):return popupoc(**kwargs).retul
  @classmethod
- def Popupyesnocancel(cls,**kwargs):return popupync(**kwargs)
+ def Popupyesno(cls,**kwargs):return popupyn(**kwargs).retul
  @classmethod
- def Popuptrycancel(cls,**kwargs):return popuptry(**kwargs)
+ def Popupyesnocancel(cls,**kwargs):return popupync(**kwargs).retul
+ @classmethod
+ def Popuptrycancel(cls,**kwargs):return popuptry(**kwargs).retul
  @classmethod
  def window(cls,**kwargs):return SubWindowController(kwargs) if kwargs.get("type")=="toplevel" else WindowController(kwargs)
  def formatlist():

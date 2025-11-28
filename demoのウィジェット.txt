@@ -34,3 +34,14 @@ Tree
 demo7
 Menu
 Menubutton
+-------------------------------------------------------
+demo8
+Popup
+Popupwarning
+Popupwarningyesno
+Popuperror
+Popupquestion
+Popupokcancel
+Popupyesno
+Popupyesnocancel
+Popuptrycancel
