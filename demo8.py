@@ -2,6 +2,7 @@ from manyfunction import *
 clear()
 from mylibral import *
 layout=[
+[sgg.Text(text="ポップアップメッセージ")],
 [sgg.Button(text="Popup(情報)",function=lambda:print(sgg.Popup(message="メッセージ")))],
 [sgg.Button(text="Popupwarning(注意)",function=lambda:print(sgg.Popupwarning(message="メッセージ")))],
 [sgg.Button(text="Popupwarningyesno(注意)",function=lambda:print(sgg.Popupwarningyesno(message="メッセージ")))],
