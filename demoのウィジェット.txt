@@ -45,3 +45,9 @@ Popupokcancel
 Popupyesno
 Popupyesnocancel
 Popuptrycancel
+-------------------------------------------------------
+demo9
+LineGraph
+BarGraph
+Scatter
+Pie

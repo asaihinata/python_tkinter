@@ -4,7 +4,7 @@ from pathlib import Path
 from tkinter import ttk,colorchooser,filedialog
 from PIL import Image,ImageTk
 from datetime import datetime,date
-from widgets import __Widget__,fonts
+from widgets import __Widget__ as wi,fonts
 class Text(tk.Label):
  def __init__(self,master,kwargs):
   self.fg=parsecolor(kwargs.get("fg",THEMES["fg1"]))
@@ -32,7 +32,7 @@ class Text(tk.Label):
   self.highlightcolor=parsecolor(kwargs.get("highlightfg"))
   self.highlightbackground=parsecolor(kwargs.get("highlightbg"))
   self.text=kwargs.get("text","")
-  self.size=__Widget__._size(kwargs)
+  self.size=wi._size(kwargs)
   self.width=self.size[0]
   self.height=self.size[1]
   super().__init__(master,takefocus=self.takefocus,borderwidth=self.borderwidth,highlightcolor=self.highlightcolor,highlightbackground=self.highlightbackground,highlightthickness=self.highlightthickness,activeforeground=self.activeforeground,activebackground=self.activebackground,anchor=self.anchor,pady=self.pady,padx=self.padx,relief=self.relief,wraplength=self.wraplength,cursor=self.cursor,text=self.text,bg=self.bg,fg=self.fg,font=self.font,width=self.width,height=self.height,justify=self.justify)
@@ -61,7 +61,7 @@ class Button(tk.Button):
  def __init__(self,master,kwargs):
   self.funcs=kwargs.get("function")
   self.text=kwargs.get("text","")
-  self.size=__Widget__._size(kwargs)
+  self.size=wi._size(kwargs)
   self.width=self.size[0]
   self.height=self.size[1]
   self.bg=parsecolor(kwargs.get("bg",THEMES["bg2"]))
@@ -87,7 +87,7 @@ class Button(tk.Button):
   self.highlightthickness=num0(kwargs.get("highlightthickness"))
   self.highlightcolor=parsecolor(kwargs.get("highlightfg"))
   self.highlightbackground=parsecolor(kwargs.get("highlightbg"))
-  super().__init__(master,takefocus=self.takefocus,highlightcolor=self.highlightcolor,highlightbackground=self.highlightbackground,highlightthickness=self.highlightthickness,activeforeground=self.activeforeground,activebackground=self.activebackground,anchor=self.anchor,pady=self.pady,padx=self.padx,relief=self.relief,wraplength=self.wraplength,cursor=self.cursor,text=self.text,bg=self.bg,fg=self.fg,font=self.font,command=lambda f=self.funcs:__Widget__._exec_funcs(f),width=self.width,height=self.height)
+  super().__init__(master,takefocus=self.takefocus,highlightcolor=self.highlightcolor,highlightbackground=self.highlightbackground,highlightthickness=self.highlightthickness,activeforeground=self.activeforeground,activebackground=self.activebackground,anchor=self.anchor,pady=self.pady,padx=self.padx,relief=self.relief,wraplength=self.wraplength,cursor=self.cursor,text=self.text,bg=self.bg,fg=self.fg,font=self.font,command=lambda f=self.funcs:wi._exec_funcs(f),width=self.width,height=self.height)
  def get_text(self):return self.text
  def set_text(self,txt):
   if txt:
@@ -140,7 +140,7 @@ class FolderLoad(tk.Button):
   self.highlightcolor=parsecolor(kwargs.get("highlightfg"))
   self.highlightbackground=parsecolor(kwargs.get("highlightbg"))
   self.text=kwargs.get("text","select Folder")
-  self.size=__Widget__._size(kwargs)
+  self.size=wi._size(kwargs)
   self.width=self.size[0]
   self.height=self.size[1]
   self.title=kwargs.get("title","select Folder")
@@ -201,7 +201,7 @@ class FileLoad(tk.Button):
   self.highlightcolor=parsecolor(kwargs.get("highlightfg"))
   self.highlightbackground=parsecolor(kwargs.get("highlightbg"))
   self.text=kwargs.get("text","select File")
-  self.size=__Widget__._size(kwargs)
+  self.size=wi._size(kwargs)
   self.width=self.size[0]
   self.height=self.size[1]
   self.title=kwargs.get("title","select File")
@@ -263,7 +263,7 @@ class Colorbtn(tk.Button):
   self.highlightbackground=parsecolor(kwargs.get("highlightbg"))
   self.text=kwargs.get("text","select color")
   self.color=kwargs.get("color",None)
-  self.size=__Widget__._size(kwargs)
+  self.size=wi._size(kwargs)
   self.width=self.size[0]
   self.height=self.size[1]
   self.title=kwargs.get("title","select color")
@@ -364,7 +364,7 @@ class Multiline(tk.Frame):
   self.highlightthickness=num0(kwargs.get("highlightthickness"))
   self.highlightcolor=parsecolor(kwargs.get("highlightfg"))
   self.highlightbackground=parsecolor(kwargs.get("highlightbg"))
-  self.size=__Widget__._size(kwargs,(20,5))
+  self.size=wi._size(kwargs,(20,5))
   self.width=self.size[0]
   self.height=self.size[1]
   self.text=kwargs.get("text","")
@@ -463,7 +463,7 @@ class Combobox(ttk.Combobox):
   style.configure(self.stylename,foreground=self.fg,background=self.bg,fieldbackground=self.bg,font=self.font)
   super().__init__(master,takefocus=self.takefocus,activeforeground=self.activeforeground,activebackground=self.activebackground,cursor=self.cursor,values=self.values,state=self.states,font=self.font,style=self.stylename)
   if self.default:self.set(self.default)
-  self.bind("<<ComboboxSelected>>",lambda e,f=self.funcs:__Widget__._exec_funcs(f))
+  self.bind("<<ComboboxSelected>>",lambda e,f=self.funcs:wi._exec_funcs(f))
  def get_value(self):return self.get()
  def set_value(self,val):self.set(val)
  def clear(self):self.set("")
@@ -578,7 +578,7 @@ class Radio(tk.Radiobutton):
   if self.group not in Radio.groups:Radio.groups[self.group]={"var":tk.StringVar(),"has_default":False}
   group_data=Radio.groups[self.group]
   self.variable=group_data["var"]
-  super().__init__(master,takefocus=self.takefocus,highlightcolor=self.highlightcolor,highlightbackground=self.highlightbackground,highlightthickness=self.highlightthickness,activeforeground=self.activeforeground,activebackground=self.activebackground,anchor=self.anchor,pady=self.pady,padx=self.padx,relief=self.relief,wraplength=self.wraplength,cursor=self.cursor,text=self.text,value=self.value,variable=self.variable,bg=self.bg,fg=self.fg,font=self.font,command=lambda f=self.funcs:__Widget__._exec_funcs(f))
+  super().__init__(master,takefocus=self.takefocus,highlightcolor=self.highlightcolor,highlightbackground=self.highlightbackground,highlightthickness=self.highlightthickness,activeforeground=self.activeforeground,activebackground=self.activebackground,anchor=self.anchor,pady=self.pady,padx=self.padx,relief=self.relief,wraplength=self.wraplength,cursor=self.cursor,text=self.text,value=self.value,variable=self.variable,bg=self.bg,fg=self.fg,font=self.font,command=lambda f=self.funcs:wi._exec_funcs(f))
   if self.default:
    self.variable.set(self.value)
    group_data["has_default"]=True
@@ -640,7 +640,7 @@ class Checkbox(tk.Checkbutton):
   self.funcs=kwargs.get("function")
   self.default=bols(kwargs.get("default"),False)
   self.variable=tk.BooleanVar()
-  super().__init__(master,takefocus=self.takefocus,highlightcolor=self.highlightcolor,highlightbackground=self.highlightbackground,highlightthickness=self.highlightthickness,activeforeground=self.activeforeground,activebackground=self.activebackground,anchor=self.anchor,pady=self.pady,padx=self.padx,relief=self.relief,wraplength=self.wraplength,cursor=self.cursor,text=self.text,variable=self.variable,bg=self.bg,fg=self.fg,font=self.font,command=lambda f=self.funcs:__Widget__._exec_funcs(f))
+  super().__init__(master,takefocus=self.takefocus,highlightcolor=self.highlightcolor,highlightbackground=self.highlightbackground,highlightthickness=self.highlightthickness,activeforeground=self.activeforeground,activebackground=self.activebackground,anchor=self.anchor,pady=self.pady,padx=self.padx,relief=self.relief,wraplength=self.wraplength,cursor=self.cursor,text=self.text,variable=self.variable,bg=self.bg,fg=self.fg,font=self.font,command=lambda f=self.funcs:wi._exec_funcs(f))
   if self.default:
    self.select()
    self.variable.set(True)
@@ -936,7 +936,7 @@ class Menu(tk.Menu):
     i+=1
     continue
    if isinstance(item,dict):
-    menu.add_command(label=item.get("label",""),command=lambda f=item.get("function"):__Widget__._exec_funcs(f))
+    menu.add_command(label=item.get("label",""),command=lambda f=item.get("function"):wi._exec_funcs(f))
     i+=1
     continue
    if isinstance(item,str):
@@ -1003,7 +1003,7 @@ class Menubutton(tk.Menubutton):
     if len(menus)<=i+1:break
     submenu=tk.Menu(self.menu,tearoff=self.tearoff,bg=self.bg,fg=self.fg,font=self.font)
     for item in menus[i+1]:
-     if isinstance(item,dict):submenu.add_command(label=item.get("label",""),command=lambda f=item.get("function",None):__Widget__._exec_funcs(f))
+     if isinstance(item,dict):submenu.add_command(label=item.get("label",""),command=lambda f=item.get("function",None):wi._exec_funcs(f))
      elif item=="---":submenu.add_separator()
      elif isinstance(item,str):submenu.add_command(label=item)
     self.menu.add_cascade(label=menus[i],menu=submenu)
@@ -1038,7 +1038,7 @@ class Frames(tk.LabelFrame):
   self.highlightbackground=parsecolor(kwargs.get("highlightbg"))
   self.title=kwargs.get("title","frame")
   self.labelanchor=kwargs.get("labelanchor","nw")
-  self.size=__Widget__._size(kwargs)
+  self.size=wi._size(kwargs)
   self.width=self.size[0]
   self.height=self.size[1]
   super().__init__(master,takefocus=self.takefocus,highlightcolor=self.highlightcolor,highlightbackground=self.highlightbackground,highlightthickness=self.highlightthickness,pady=self.pady,padx=self.padx,relief=self.relief,cursor=self.cursor,labelanchor=self.labelanchor,text=self.title,font=self.font,bg=self.bg,fg=self.fg)
@@ -1056,7 +1056,7 @@ class Column(tk.Frame):
   self.highlightthickness=num0(kwargs.get("highlightthickness"))
   self.highlightcolor=parsecolor(kwargs.get("highlightfg"))
   self.highlightbackground=parsecolor(kwargs.get("highlightbg"))
-  self.size=__Widget__._size(kwargs)
+  self.size=wi._size(kwargs)
   self.width=self.size[0]
   self.height=self.size[1]
   super().__init__(master,takefocus=self.takefocus,highlightcolor=self.highlightcolor,highlightbackground=self.highlightbackground,highlightthickness=self.highlightthickness,pady=self.pady,padx=self.padx,relief=self.relief,cursor=self.cursor,bg=self.bg)
@@ -1222,7 +1222,7 @@ class Progressbar(ttk.Progressbar):
   style.configure(self.style_name,background=self.fg,troughcolor=self.bg,thickness=20)
   super().__init__(master,takefocus=self.takefocus,cursor=self.cursor,orient=self.orient,length=self.length,mode=self.mode,style=self.style_name,maximum=self.maximum)
   self._set(self.value)
-  if self.funcs:self.bind("<Button-1>",lambda e,f=self.funcs:__Widget__._exec_funcs(f))
+  if self.funcs:self.bind("<Button-1>",lambda e,f=self.funcs:wi._exec_funcs(f))
  def get_max(self):return self.maximum
  def _set(self,val):
   try:self["value"]=val
@@ -1270,7 +1270,7 @@ class Link(tk.Label):
   if (self.link_url and self.link_url!="") and (txt and txt!=""):self.text=txt
   elif (self.link_url and self.link_url!="") and (not txt or txt==""):self.text=self.link_url
   else:self.text=""
-  self.size=__Widget__._size(kwargs)
+  self.size=wi._size(kwargs)
   self.width=self.size[0]
   self.height=self.size[1]
   super().__init__(master,takefocus=self.takefocus,highlightcolor=self.highlightcolor,highlightbackground=self.highlightbackground,highlightthickness=self.highlightthickness,activeforeground=self.activeforeground,activebackground=self.activebackground,anchor=self.anchor,pady=self.pady,padx=self.padx,relief=self.relief,wraplength=self.wraplength,cursor=self.cursor,text=self.text,bg=self.bg,fg=self.fg,font=self.font,width=self.width,height=self.height,justify=self.justify)

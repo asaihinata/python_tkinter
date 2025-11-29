@@ -1,6 +1,8 @@
 from manyfunction import *
 clear()
 from mylibral import *
+x1=[1,2,3]
+y1=[1,2,3]
 menus=[
 ["ファイル",
 ["開く",
@@ -127,7 +129,15 @@ sgg.Checkbox(text="その他",group="food_name")
 [sgg.Button(text="Popupokcancel(bool型を返す)",function=lambda:print(sgg.Popupokcancel(message="メッセージ")))],
 [sgg.Button(text="Popupquestion(YesかNoを返す)",function=lambda:print(sgg.Popupquestion(message="メッセージ")))],
 [sgg.Button(text="Popupyesnocancel(bool型とNoneを返す)",function=lambda:print(sgg.Popupyesnocancel(message="メッセージ")))],
-[sgg.Button(text="Popuptrycancel(bool型を返す)",function=lambda:print(sgg.Popuptrycancel(message="メッセージ")))]
+[sgg.Button(text="Popuptrycancel(bool型を返す)",function=lambda:print(sgg.Popuptrycancel(message="メッセージ")))],
+[sgg.Text(text="折り線グラフ")],
+[sgg.LineGraph(xlist=x1,ylist=y1,title="タイトル",xlabel="xlabel",ylabel="ylabel")],
+[sgg.Text(text="棒グラフ")],
+[sgg.BarGraph(xlist=x1,ylist=y1,title="タイトル",xlabel="xlabel",ylabel="ylabel",width=0.5)],
+[sgg.Text(text="散布図")],
+[sgg.Scatter(xlist=x1,ylist=y1,title="タイトル",xlabel="xlabel",ylabel="ylabel")],
+[sgg.Text(text="円グラフ")],
+[sgg.Pie(date=x1,title="タイトル")]
 ]
-win=sgg.window(title="mylibral ウィジェット デモ",layout=layout,load=progress_start,scroll_x=True,scroll_y=True,maxmine=True)
+win=sgg.window(title="mylibral ウィジェット デモ",layout=layout,load=[progress_start],scroll_x=True,scroll_y=True,maxmine=True)
 win.run()

@@ -1,8 +1,9 @@
+import pyautogui as p
+from widgets import __Widget__
 from manyfunction import *
 from element import *
-from widgets import __Widget__
 from popup import *
-import pyautogui as p
+from Graph import *
 winsize=list(p.size())
 class WindowController:
  def __init__(self,kwargs):
@@ -115,6 +116,11 @@ class WindowController:
   elif t=="Slidebar":widget=Slidebar(parent,kwargs)
   elif t=="Calendars":widget=Calendars(parent,kwargs)
   elif t=="InputDate":widget=InputDate(parent,kwargs)
+  # グラフ
+  elif t=="LineGraph":widget=LineGraph(parent,kwargs)
+  elif t=="BarGraph":widget=BarGraph(parent,kwargs)
+  elif t=="Scatter":widget=Scatter(parent,kwargs)
+  elif t=="Pie":widget=Pie(parent,kwargs)
   else:widget=tk.Label(parent,text=f"Unknown element:{t}")
   if widget:# packとregister
    if t=="Menu":self.root.config(menu=widget)
